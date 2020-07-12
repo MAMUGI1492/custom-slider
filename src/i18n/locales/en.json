@@ -1,0 +1,33 @@
+{
+	"layout": {
+		"header": {
+			"quasarVersion": "Based on"
+		},
+		"drawer": {
+			"usefulLinks": "Links of interest",
+			"options": "Options",
+			"language": "Language",
+			"theme": "Theme",
+			"website": "Personal website"
+		}
+	},
+	"error404": {
+		"text": "Oops. There's nothing here...",
+		"button": "Go home"
+	},
+	"slider": {
+		"main": {
+			"notify": {
+				"message": "The screen has been resized.",
+				"caption": "Click to reload the images.",
+				"button": "Recharge"
+			}
+		},
+		"image": {
+			"loading": "Loading"
+		},
+		"refresh": {
+			"tooltip": "Reload"
+		}
+	}
+}
