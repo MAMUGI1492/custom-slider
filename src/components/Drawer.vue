@@ -37,6 +37,19 @@
 
 			q-item
 				q-item-section(avatar)
+					q-icon(name="view_day")
+				q-item-section {{ $t('layout.drawer.images') }}
+				q-item-section
+					q-slider(
+						:value="numberSlides"
+						@change="setNumberSlides"
+						:min="1"
+						:max="10"
+						label
+					)
+
+			q-item
+				q-item-section(avatar)
 					q-icon(name="translate")
 				q-item-section
 					q-select(
@@ -66,6 +79,8 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex'
+
 	import EssentialLink from 'components/EssentialLink.vue'
 
 	export default {
@@ -118,6 +133,7 @@
 			}
 		},
 		computed: {
+			...mapState('slider', ['numberSlides']),
 			drawerClass() {
 				return { 'bg-grey-1': this.lightTheme }
 			},
@@ -136,6 +152,7 @@
 			this.setLocale(this.lang)
 		},
 		methods: {
+			...mapMutations('slider', ['setNumberSlides']),
 			changeTheme(value) {
 				this.$q.dark.set(!value)
 			},

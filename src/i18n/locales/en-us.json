@@ -5,10 +5,11 @@
 		},
 		"drawer": {
 			"usefulLinks": "Links of interest",
+			"website": "Personal website",
 			"options": "Options",
+			"images": "Images",
 			"language": "Language",
-			"theme": "Theme",
-			"website": "Personal website"
+			"theme": "Theme"
 		}
 	},
 	"error404": {

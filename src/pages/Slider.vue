@@ -24,6 +24,8 @@
 	const { height: getHeight } = dom
 	const { getScrollTarget, setScrollPosition } = scroll
 
+	import { mapState } from 'vuex'
+
 	import SliderControls from 'components/SliderControls.vue'
 	import SliderImage from 'components/SliderImage.vue'
 	import SliderRefresh from 'components/SliderRefresh.vue'
@@ -49,11 +51,11 @@
 				newImagesStyles: {
 					height: null,
 					width: null
-				},
-				numberSlides: 2
+				}
 			}
 		},
 		computed: {
+			...mapState('slider', ['numberSlides']),
 			slides() {
 				const urlBase = 'https://picsum.photos/',
 					url = `${urlBase}${this.currentImagesStyles.width}/${this.currentImagesStyles.height}`

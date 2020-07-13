@@ -1,33 +1,34 @@
 {
-  "layout": {
-    "header": {
-      "quasarVersion": "Basado en"
-    },
-    "drawer": {
-      "usefulLinks": "Enlaces de interés",
-      "options": "Opciones",
-      "language": "Idioma",
-      "theme": "Tema",
-      "website": "Página web personal"
-    }
-  },
-  "error404": {
-    "text": "Uups. Aquí no hay nada...",
-    "button": "Ir al inicio"
-  },
-  "slider": {
-    "main": {
-      "notify": {
-        "message": "Se ha redimensionado la pantalla.",
-        "caption": "Pulsa para recargar las imágenes.",
-        "button": "Recargar"
-      }
-    },
-    "image": {
-      "loading": "Cargando"
-    },
-    "refresh": {
-      "tooltip": "Recargar"
-    }
-  }
+	"layout": {
+		"header": {
+			"quasarVersion": "Basado en"
+		},
+		"drawer": {
+			"usefulLinks": "Enlaces de interés",
+			"website": "Página web personal",
+			"options": "Opciones",
+			"images": "Imágenes",
+			"language": "Idioma",
+			"theme": "Tema"
+		}
+	},
+	"error404": {
+		"text": "Uups. Aquí no hay nada...",
+		"button": "Ir al inicio"
+	},
+	"slider": {
+		"main": {
+			"notify": {
+				"message": "Se ha redimensionado la pantalla.",
+				"caption": "Pulsa para recargar las imágenes.",
+				"button": "Recargar"
+			}
+		},
+		"image": {
+			"loading": "Cargando"
+		},
+		"refresh": {
+			"tooltip": "Recargar"
+		}
+	}
 }
