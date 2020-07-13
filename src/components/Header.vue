@@ -10,12 +10,28 @@
 				round
 			)
 			q-toolbar-title Custom Slider
-			div {{ $t('layout.header.quasarVersion') }} Quasar v{{ $q.version }}
+			div {{ $t('layout.header.quasarVersion') }} Quasar
+				|
+				|
+				q-badge(
+					:color="colorBadge",
+					:text-color="textColorBadge",
+					:label="`v${ $q.version }`"
+					align="middle"
+				)
 </template>
 
 <script>
 	export default {
 		name: 'Header',
+		computed: {
+			colorBadge() {
+				return this.$q.dark.isActive ? 'black' : 'white'
+			},
+			textColorBadge() {
+				return this.$q.dark.isActive ? 'white' : 'primary'
+			}
+		},
 		methods: {
 			toggleDrawer() {
 				this.$emit('toggle-drawer')
