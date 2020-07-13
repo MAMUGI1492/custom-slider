@@ -1,7 +1,7 @@
-import es from './locales/es'
-import en from './locales/en'
+import es from './locales/es-es'
+import en from './locales/en-us'
 
 export default {
-	en,
-	es
+	'en-us': en,
+	'es-es': es
 }

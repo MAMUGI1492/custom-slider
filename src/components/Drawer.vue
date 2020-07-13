@@ -107,10 +107,12 @@
 						link: 'https://quasar.dev'
 					}
 				],
-				lang: this.$i18n.locale,
+				lang: this.$q.lang.getLocale().includes('es-')
+					? 'es-es'
+					: 'en-us',
 				langOptions: [
 					{ value: 'en-us', label: 'English' },
-					{ value: 'es', label: 'Español' }
+					{ value: 'es-es', label: 'Español' }
 				],
 				lightTheme: null
 			}
@@ -125,16 +127,22 @@
 		},
 		watch: {
 			lang(lang) {
-				this.$i18n.locale = lang
-				this.essentialLinks[1].title = this.$t('layout.drawer.website')
+				this.setLocale(lang)
 			}
 		},
 		created() {
 			this.lightTheme = !this.$q.dark.isActive
+
+			this.setLocale(this.lang)
 		},
 		methods: {
 			changeTheme(value) {
 				this.$q.dark.set(!value)
+			},
+			setLocale(lang) {
+				this.$i18n.locale = lang
+
+				this.essentialLinks[1].title = this.$t('layout.drawer.website')
 			}
 		}
 	}
