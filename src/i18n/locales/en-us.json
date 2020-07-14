@@ -25,7 +25,9 @@
 			}
 		},
 		"image": {
-			"loading": "Loading"
+			"loading": "Loading",
+			"logBeginning": "You've reached the first image, you can't keep going up.",
+			"logEnd": "You've reached the last image, you can't keep going down."
 		},
 		"refresh": {
 			"tooltip": "Reload"

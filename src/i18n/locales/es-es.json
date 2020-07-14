@@ -25,7 +25,15 @@
 			}
 		},
 		"image": {
-			"loading": "Cargando"
+			"loading": "Cargando",
+			"logBeginning": {
+				"message": "No puedes seguir subiendo.",
+				"caption": "Has llegado a la primera imagen."
+			},
+			"logEnd": {
+				"message": "No puedes seguir bajando.",
+				"caption": "Has llegado a la última imagen."
+			}
 		},
 		"refresh": {
 			"tooltip": "Recargar"

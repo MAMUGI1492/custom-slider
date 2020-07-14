@@ -1,7 +1,6 @@
 <template lang="pug">
 	q-img.slider__image(
 		v-touch-swipe.mouse.vertical="handleSwipe",
-		:id="id",
 		:style="styleComponent",
 		:src="src",
 		transition="fade"
@@ -33,26 +32,46 @@
 				type: Object
 			}
 		},
-		computed: {
-			id() {
-				return `Image ${this.index + 1}`
-			}
-		},
 		methods: {
-			handleSwipe({ evt, ...information }) {
-				const id = evt.target.parentElement.id
-				let [name, number] = id.split(' ')
+			handleSwipe({ direction, ...data }) {
+				let index = parseInt(
+					data.evt.target.parentElement.id.split('-')[1]
+				)
 
-				if (
-					information.direction === 'up' &&
-					number < this.numberSlides
-				) {
-					number = parseInt(number) + 1
-				} else if (information.direction === 'down' && number > 1) {
-					number = parseInt(number) - 1
+				const goDown = direction === 'up',
+					goUp = direction === 'down',
+					isEnd = index >= this.numberSlides - 1,
+					isBeginning = index <= 0
+
+				if ((goDown && !isEnd) || (goUp && !isBeginning)) {
+					if (goDown && !isEnd) {
+						index++
+					} else if (goUp && !isBeginning) {
+						index--
+					}
+
+					this.$emit('handle-swipe', index)
+				} else {
+					let log = null
+
+					if (goDown && isEnd) {
+						log = {
+							message: this.$t('slider.image.logEnd.message'),
+							caption: this.$t('slider.image.logEnd.caption')
+						}
+					} else if (goUp && isBeginning) {
+						log = {
+							message: this.$t(
+								'slider.image.logBeginning.message'
+							),
+							caption: this.$t(
+								'slider.image.logBeginning.caption'
+							)
+						}
+					}
+
+					this.$emit('handle-edge', log)
 				}
-
-				this.$emit('handle-swipe', `${name} ${number}`)
 			}
 		}
 	}

@@ -1,12 +1,14 @@
 <template lang="pug">
-	nav.slider__controls(:style="navFinalStyles")
-		q-btn(
-			v-for="number in numberSlides",
-			:key="number",
-			@click="handleClick",
-			:label="number",
-			color="primary",
-			round
+	.slider__controls(:style="finalControlsStyles")
+		q-pagination(
+			@input="handleClick",
+			:boundary-links="moreThan2",
+			:boundary-numbers="false",
+			:direction-links="moreThan2",
+			:max="numberSlides",
+			:max-pages="6",
+			:style="styleQPagination",
+			:value="currentSlide"
 		)
 </template>
 
@@ -17,9 +19,13 @@
 	export default {
 		name: 'SliderControls',
 		props: {
-			navStyles: {
+			controlsStyles: {
 				required: true,
 				type: Object
+			},
+			currentSlideIndex: {
+				required: true,
+				type: Number
 			},
 			numberSlides: {
 				required: true,
@@ -27,18 +33,31 @@
 			}
 		},
 		computed: {
-			navFinalStyles() {
+			finalControlsStyles() {
 				return {
 					right: `${getScrollbarWidth() + 18}px`,
-					...this.navStyles
+					...this.controlsStyles
+				}
+			},
+			currentSlide() {
+				return this.currentSlideIndex + 1
+			},
+			moreThan2() {
+				return this.numberSlides > 2
+			},
+			styleQPagination() {
+				return {
+					'background-color': this.$q.dark.isActive
+						? 'rgba(0, 0, 0, 0.75)'
+						: 'rgba(255, 255, 255, .75)'
 				}
 			}
 		},
 		methods: {
-			handleClick(event) {
-				const id = parseInt(event.target.textContent)
+			handleClick(currentSlide) {
+				const currentSlideIndex = currentSlide - 1
 
-				this.$emit('handle-click', `Image ${id}`)
+				this.$emit('handle-click', currentSlideIndex)
 			}
 		}
 	}
@@ -50,8 +69,21 @@
 		display flex
 		flex-direction column
 		justify-content center
-		.q-btn
-			margin 9px 0
-			background-color white
-			color black
+</style>
+
+<style lang="stylus">
+	.slider__controls
+		> .q-pagination
+			flex-direction column
+			border-radius $generic-border-radius
+			> .q-btn
+				> .q-btn__wrapper
+					transform rotate(90deg)
+				&:nth-child(3)
+				&:nth-last-child(3)
+					> .q-btn__wrapper
+						> .q-btn__content
+							transform rotate(90deg)
+			> div
+				flex-direction column
 </style>

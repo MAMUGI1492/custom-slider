@@ -2,21 +2,25 @@
 	q-page.slider.scroll(:style-fn="myTweak")
 		SliderImage(
 			v-for="slide in slides",
-			:key="slide.id",
+			:key="slide.index",
+			@handle-edge="showWarnings",
 			@handle-swipe="scrollToElement",
-			:number-slides="numberSlides",
-			v-bind="slide"
+			:id="slide.id",
+			v-bind="slide",
+			:number-slides="numberSlides"
 		)
 
 		SliderControls(
 			@handle-click="scrollToElement",
-			:nav-styles="navStyles",
-			:number-slides="numberSlides"
+			:controls-styles="controlsStyles",
+			:current-slide-index="currentSlideIndex",
+			:number-slides="numberSlides",
 		)
 
 		SliderRefresh(@update-measures="updateMeasures")
 
 		q-resize-observer(@resize="onResize", debounce="300")
+		q-scroll-observer(@scroll="onScroll", debounce="200")
 </template>
 
 <script>
@@ -39,26 +43,27 @@
 		},
 		data() {
 			return {
-				loaded: false,
-				currentImagesStyles: {
-					height: null,
-					width: null
-				},
-				navStyles: {
+				controlsStyles: {
 					height: null,
 					top: null
 				},
-				newImagesStyles: {
+				currentSlideIndex: 0,
+				currentSlideStyles: {
 					height: null,
 					width: null
-				}
+				},
+				newSlideStyles: {
+					height: null,
+					width: null
+				},
+				loaded: false
 			}
 		},
 		computed: {
 			...mapState('slider', ['numberSlides']),
 			slides() {
 				const urlBase = 'https://picsum.photos/',
-					url = `${urlBase}${this.currentImagesStyles.width}/${this.currentImagesStyles.height}`
+					url = `${urlBase}${this.currentSlideStyles.width}/${this.currentSlideStyles.height}`
 
 				return Array.from({ length: this.numberSlides }, (_, index) => {
 					const id = uid(),
@@ -67,10 +72,11 @@
 							: `?random=${id}.webp`
 
 					return {
+						id: `Image-${index}`,
 						index,
 						src: `${url}${parameters}`,
 						styleComponent: {
-							height: `${this.currentImagesStyles.height}px`
+							height: `${this.currentSlideStyles.height}px`
 						}
 					}
 				})
@@ -92,14 +98,14 @@
 					headerHight = parseInt(getHeight(header)),
 					height = parseInt(getHeight(body)) - headerHight
 
-				this.navStyles.height = `${height}px`
-				this.navStyles.top = `${headerHight}px`
+				this.controlsStyles.height = `${height}px`
+				this.controlsStyles.top = `${headerHight}px`
 
-				this.newImagesStyles.height = height
-				this.newImagesStyles.width = width
+				this.newSlideStyles.height = height
+				this.newSlideStyles.width = width
 
 				if (this.loaded) {
-					this.$q.notify({
+					this.dismissNotify = this.$q.notify({
 						position: 'bottom-right',
 						color: 'primary',
 						icon: 'image_aspect_ratio',
@@ -118,19 +124,36 @@
 					})
 				}
 			},
-			scrollToElement(id) {
-				const element = document.getElementById(id),
+			onScroll({ position }) {
+				const index = Math.floor(
+					position / this.currentSlideStyles.height
+				)
+
+				this.currentSlideIndex = index ? index : 0
+			},
+			scrollToElement(index) {
+				const element = document.getElementById(this.slides[index].id),
 					target = getScrollTarget(element),
 					offset = element.offsetTop
 
 				setScrollPosition(target, offset)
 			},
+			showWarnings({ caption, message }) {
+				this.$q.notify({
+					type: 'warning',
+					position: 'bottom-right',
+					message: message,
+					caption: caption,
+					progress: true,
+					timeout: 2000
+				})
+			},
 			updateMeasures() {
-				this.currentImagesStyles.height = 0
-				this.currentImagesStyles.width = 0
+				this.currentSlideStyles.height = 0
+				this.currentSlideStyles.width = 0
 
-				this.currentImagesStyles.height = this.newImagesStyles.height
-				this.currentImagesStyles.width = this.newImagesStyles.width
+				this.currentSlideStyles.height = this.newSlideStyles.height
+				this.currentSlideStyles.width = this.newSlideStyles.width
 			}
 		}
 	}
