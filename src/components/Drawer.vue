@@ -54,6 +54,7 @@
 				q-item-section
 					q-select(
 						v-model="lang",
+						@input="onInput",
 						:label="$t('layout.drawer.language')",
 						:options="langOptions",
 						dense,
@@ -79,7 +80,7 @@
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex'
+	import { mapState, mapMutations, mapActions } from 'vuex'
 
 	import EssentialLink from 'components/EssentialLink.vue'
 
@@ -153,8 +154,12 @@
 		},
 		methods: {
 			...mapMutations('slider', ['setNumberSlides']),
+			...mapActions('slider', ['stopNotify']),
 			changeTheme(value) {
 				this.$q.dark.set(!value)
+			},
+			onInput() {
+				this.stopNotify()
 			},
 			setLocale(lang) {
 				this.$i18n.locale = lang

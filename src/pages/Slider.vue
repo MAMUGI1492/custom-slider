@@ -17,7 +17,7 @@
 			:number-slides="numberSlides",
 		)
 
-		SliderRefresh(@update-measures="updateMeasures")
+		SliderRefresh(@update-measures="onUpdateMeasures")
 
 		q-resize-observer(@resize="onResize", debounce="300")
 		q-scroll-observer(@scroll="onScroll", debounce="200")
@@ -28,7 +28,7 @@
 	const { height: getHeight } = dom
 	const { getScrollTarget, setScrollPosition } = scroll
 
-	import { mapState } from 'vuex'
+	import { mapState, mapMutations, mapActions } from 'vuex'
 
 	import SliderControls from 'components/SliderControls.vue'
 	import SliderImage from 'components/SliderImage.vue'
@@ -87,6 +87,8 @@
 			this.loaded = true
 		},
 		methods: {
+			...mapMutations('slider', ['setNotify']),
+			...mapActions('slider', ['stopNotify']),
 			myTweak(offset) {
 				return {
 					height: offset ? `calc(100vh - ${offset}px)` : '100vh'
@@ -105,23 +107,25 @@
 				this.newSlideStyles.width = width
 
 				if (this.loaded) {
-					this.dismissNotify = this.$q.notify({
-						position: 'bottom-right',
-						color: 'primary',
-						icon: 'image_aspect_ratio',
-						message: this.$t('slider.main.notify.message'),
-						caption: this.$t('slider.main.notify.caption'),
-						progress: true,
-						timeout: 5000,
-						actions: [
-							{
-								color: 'white',
-								label: this.$t('slider.main.notify.button'),
-								icon: 'refresh',
-								handler: () => this.updateMeasures()
-							}
-						]
-					})
+					this.setNotify(
+						this.$q.notify({
+							position: 'bottom-right',
+							color: 'primary',
+							icon: 'image_aspect_ratio',
+							message: this.$t('slider.main.notify.message'),
+							caption: this.$t('slider.main.notify.caption'),
+							progress: true,
+							timeout: 5000,
+							actions: [
+								{
+									color: 'white',
+									label: this.$t('slider.main.notify.button'),
+									icon: 'refresh',
+									handler: () => this.updateMeasures()
+								}
+							]
+						})
+					)
 				}
 			},
 			onScroll({ position }) {
@@ -130,6 +134,11 @@
 				)
 
 				this.currentSlideIndex = index ? index : 0
+			},
+			onUpdateMeasures() {
+				this.stopNotify()
+
+				this.updateMeasures()
 			},
 			scrollToElement(index) {
 				const element = document.getElementById(this.slides[index].id),
