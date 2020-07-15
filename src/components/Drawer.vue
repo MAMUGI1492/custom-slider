@@ -54,7 +54,7 @@
 				q-item-section
 					q-select(
 						v-model="lang",
-						@input="onInput",
+						@input="stopNotify",
 						:label="$t('layout.drawer.language')",
 						:options="langOptions",
 						dense,
@@ -72,7 +72,7 @@
 				q-item-section(avatar)
 					q-toggle(
 						v-model="lightTheme",
-						@input="changeTheme($event)",
+						@input="changeTheme",
 						checked-icon="wb_sunny",
 						color="blue",
 						unchecked-icon="bedtime"
@@ -157,9 +157,6 @@
 			...mapActions('slider', ['stopNotify']),
 			changeTheme(value) {
 				this.$q.dark.set(!value)
-			},
-			onInput() {
-				this.stopNotify()
 			},
 			setLocale(lang) {
 				this.$i18n.locale = lang
