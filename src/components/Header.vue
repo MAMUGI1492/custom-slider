@@ -17,7 +17,6 @@
 					:color="colorBadge",
 					:text-color="textColorBadge",
 					:label="`v${ $q.version }`"
-					align="middle"
 				)
 </template>
 
