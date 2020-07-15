@@ -7,7 +7,7 @@
 		show-if-above
 	)
 		q-img.drawer__head(
-			src="~assets/material.png",
+			src="~assets/material.webp",
 			alt="fondo de la cabecera"
 		)
 			.drawer__head__body
