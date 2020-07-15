@@ -38,7 +38,7 @@
 			q-item
 				q-item-section(avatar)
 					q-icon(name="view_day")
-				q-item-section {{ $t('layout.drawer.images') }}
+				q-item-section {{ $t('layout.drawer.images') }}: {{ numberSlides }}
 				q-item-section
 					q-slider(
 						:value="numberSlides"
