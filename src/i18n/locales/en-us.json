@@ -26,8 +26,14 @@
 		},
 		"image": {
 			"loading": "Loading",
-			"logBeginning": "You've reached the first image, you can't keep going up.",
-			"logEnd": "You've reached the last image, you can't keep going down."
+			"logBeginning": {
+				"message": "You can't keep going up.",
+				"caption": "You've reached the first image."
+			},
+			"logEnd": {
+				"message": "You can't keep going down.",
+				"caption": "You've reached the last image."
+			}
 		},
 		"refresh": {
 			"tooltip": "Reload"
