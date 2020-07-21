@@ -11,8 +11,13 @@ export default {
 	},
 	actions: {
 		stopNotify({ commit, state }) {
-			state.notify()
-			commit('removeNotify')
+			const notify = state.notify
+
+			if (notify) {
+				notify()
+
+				commit('removeNotify')
+			}
 		}
 	}
 }
