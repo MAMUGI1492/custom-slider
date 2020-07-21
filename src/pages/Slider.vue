@@ -25,7 +25,7 @@
 
 <script>
 	import { dom, scroll, uid } from 'quasar'
-	const { height: getHeight } = dom
+	const { height: getHeight, width: getWidth } = dom
 	const { getScrollTarget, setScrollPosition } = scroll
 
 	import { mapState, mapMutations, mapActions } from 'vuex'
@@ -56,7 +56,8 @@
 					height: null,
 					width: null
 				},
-				loaded: false
+				loaded: false,
+				orientation: null
 			}
 		},
 		computed: {
@@ -97,14 +98,29 @@
 			onResize({ width }) {
 				const body = document.getElementById('q-app'),
 					header = document.getElementsByClassName('q-header')[0],
+					bodyHight = parseInt(getHeight(body)),
+					bodyWidth = parseInt(getWidth(body)),
 					headerHight = parseInt(getHeight(header)),
-					height = parseInt(getHeight(body)) - headerHight
+					height = bodyHight - headerHight,
+					newOrientation =
+						bodyHight > bodyWidth ? 'portrait' : 'landscape'
 
 				this.controlsStyles.height = `${height}px`
 				this.controlsStyles.top = `${headerHight}px`
 
 				this.newSlideStyles.height = height
 				this.newSlideStyles.width = width
+
+				if (
+					this.$q.platform.is.mobile &&
+					this.orientation !== newOrientation
+				) {
+					this.orientation = newOrientation
+
+					this.updateMeasures()
+
+					return
+				}
 
 				if (this.loaded) {
 					this.setNotify(
