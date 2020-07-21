@@ -129,7 +129,7 @@
 				}
 			},
 			onScroll({ position }) {
-				const index = Math.floor(
+				const index = Math.round(
 					position / this.currentSlideStyles.height
 				)
 

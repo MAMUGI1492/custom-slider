@@ -5,8 +5,8 @@
 			:boundary-links="moreThan2",
 			:boundary-numbers="false",
 			:direction-links="moreThan2",
+			:input="true",
 			:max="numberSlides",
-			:max-pages="6",
 			:style="styleQPagination",
 			:value="currentSlide"
 		)
@@ -78,12 +78,8 @@
 			border-radius $generic-border-radius
 			> .q-btn
 				> .q-btn__wrapper
+				& > .q-btn__content
 					transform rotate(90deg)
-				&:nth-child(3)
-				&:nth-last-child(3)
-					> .q-btn__wrapper
-						> .q-btn__content
-							transform rotate(90deg)
 			> div
 				flex-direction column
 </style>
