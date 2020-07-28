@@ -41,25 +41,23 @@
 			SliderImage,
 			SliderRefresh
 		},
-		data() {
-			return {
-				controlsStyles: {
-					height: null,
-					top: null
-				},
-				currentSlideIndex: 0,
-				currentSlideStyles: {
-					height: null,
-					width: null
-				},
-				newSlideStyles: {
-					height: null,
-					width: null
-				},
-				loaded: false,
-				orientation: null
-			}
-		},
+		data: () => ({
+			controlsStyles: {
+				height: null,
+				top: null
+			},
+			currentSlideIndex: 0,
+			currentSlideStyles: {
+				height: null,
+				width: null
+			},
+			newSlideStyles: {
+				height: null,
+				width: null
+			},
+			loaded: false,
+			orientation: null
+		}),
 		computed: {
 			...mapState('slider', ['numberSlides']),
 			slides() {

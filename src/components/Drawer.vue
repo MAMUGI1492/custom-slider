@@ -95,44 +95,40 @@
 				type: Boolean
 			}
 		},
-		data() {
-			return {
-				essentialLinks: [
-					{
-						title: 'Github',
-						caption: 'MAMUGI1492/custom-slider',
-						icon: 'code',
-						link: 'https://github.com/MAMUGI1492/custom-slider'
-					},
-					{
-						title: this.$t('layout.drawer.website'),
-						caption: 'manuelmg.com',
-						icon: 'public',
-						link: 'https://www.manuelmg.com/'
-					},
-					{
-						title: 'Twitter',
-						caption: '@MAMUGI1492',
-						icon: 'rss_feed',
-						link: 'https://twitter.com/MAMUGI1492'
-					},
-					{
-						title: 'Quasar',
-						caption: 'quasar.dev',
-						icon: 'favorite',
-						link: 'https://quasar.dev'
-					}
-				],
-				lang: this.$q.lang.getLocale().includes('es-')
-					? 'es-es'
-					: 'en-us',
-				langOptions: [
-					{ value: 'en-us', label: 'English' },
-					{ value: 'es-es', label: 'Español' }
-				],
-				lightTheme: null
-			}
-		},
+		data: () => ({
+			essentialLinks: [
+				{
+					title: 'Github',
+					caption: 'MAMUGI1492/custom-slider',
+					icon: 'code',
+					link: 'https://github.com/MAMUGI1492/custom-slider'
+				},
+				{
+					title: this.$t('layout.drawer.website'),
+					caption: 'manuelmg.com',
+					icon: 'public',
+					link: 'https://www.manuelmg.com/'
+				},
+				{
+					title: 'Twitter',
+					caption: '@MAMUGI1492',
+					icon: 'rss_feed',
+					link: 'https://twitter.com/MAMUGI1492'
+				},
+				{
+					title: 'Quasar',
+					caption: 'quasar.dev',
+					icon: 'favorite',
+					link: 'https://quasar.dev'
+				}
+			],
+			lang: this.$q.lang.getLocale().includes('es-') ? 'es-es' : 'en-us',
+			langOptions: [
+				{ value: 'en-us', label: 'English' },
+				{ value: 'es-es', label: 'Español' }
+			],
+			lightTheme: null
+		}),
 		computed: {
 			...mapState('slider', ['numberSlides']),
 			drawerClass() {

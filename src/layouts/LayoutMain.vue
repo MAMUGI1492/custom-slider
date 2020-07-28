@@ -18,11 +18,9 @@
 			Drawer,
 			Header
 		},
-		data() {
-			return {
-				drawerOpen: false
-			}
-		},
+		data: () => ({
+			drawerOpen: false
+		}),
 		methods: {
 			toggleDrawer() {
 				this.drawerOpen = !this.drawerOpen
