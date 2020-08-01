@@ -7,15 +7,20 @@
 	)
 		template(#loading)
 			.slider__image__loading
-				q-spinner-tail(color="primary", size="xl")
+				q-spinner-tail(
+					color="primary",
+					size="xl"
+				)
 				span {{ $t('slider.image.loading') }}...
 </template>
 
 <script>
+	import { uid } from 'quasar'
+
 	export default {
 		name: 'SliderImage',
 		props: {
-			index: {
+			height: {
 				required: true,
 				type: Number
 			},
@@ -23,43 +28,64 @@
 				required: true,
 				type: Number
 			},
-			src: {
+			slideIDbase: {
 				required: true,
 				type: String
 			},
-			styleComponent: {
+			width: {
 				required: true,
-				type: Object
+				type: Number
+			}
+		},
+		computed: {
+			src() {
+				const urlBase = 'https://picsum.photos/'
+				const parameters = this.$q.dark.isActive
+					? `?grayscale=true&random=${uid()}.webp`
+					: `?random=${uid()}.webp`
+
+				return `${urlBase}${this.width}/${this.height}${parameters}`
+			},
+			styleComponent() {
+				return {
+					height: `${this.height}px`
+				}
 			}
 		},
 		methods: {
 			handleSwipe({ direction, ...data }) {
-				let index = parseInt(
-					data.evt.target.parentElement.id.split('-')[1]
-				)
+				const id = data.evt.target.parentElement.id
+				const subtract = (value, mask) =>
+					value
+						.split('')
+						.reduce(
+							(accumulator, currentValue, index) =>
+								mask[index] === currentValue
+									? accumulator
+									: accumulator + currentValue,
+							''
+						)
+				let index = parseInt(subtract(id, this.slideIDbase))
 
-				const goDown = direction === 'up',
-					goUp = direction === 'down',
-					isEnd = index >= this.numberSlides - 1,
-					isBeginning = index <= 0
+				const goDown = direction === 'up'
+				const goUp = direction === 'down'
+				const isEnd = index >= this.numberSlides - 1
+				const isBeginning = index <= 0
 
 				if ((goDown && !isEnd) || (goUp && !isBeginning)) {
-					if (goDown && !isEnd) {
-						index++
-					} else if (goUp && !isBeginning) {
-						index--
-					}
+					if (goDown) index++
+					else index--
 
 					this.$emit('handle-swipe', index)
 				} else {
 					let log = null
 
-					if (goDown && isEnd) {
+					if (goDown) {
 						log = {
 							message: this.$t('slider.image.logEnd.message'),
 							caption: this.$t('slider.image.logEnd.caption')
 						}
-					} else if (goUp && isBeginning) {
+					} else {
 						log = {
 							message: this.$t(
 								'slider.image.logBeginning.message'
@@ -79,8 +105,6 @@
 
 <style lang="stylus" scoped>
 	.slider__image
-		background-size cover
-		background-position center
 		scroll-snap-align center
 		.slider__image__loading
 			height 100%

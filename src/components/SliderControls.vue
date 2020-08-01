@@ -1,5 +1,5 @@
 <template lang="pug">
-	.slider__controls(:style="finalControlsStyles")
+	.slider__controls(:style="controlStyle")
 		q-pagination(
 			@input="handleClick",
 			:boundary-links="moreThan2",
@@ -19,24 +19,29 @@
 	export default {
 		name: 'SliderControls',
 		props: {
-			controlsStyles: {
-				required: true,
-				type: Object
-			},
 			currentSlideIndex: {
+				required: true,
+				type: Number
+			},
+			height: {
 				required: true,
 				type: Number
 			},
 			numberSlides: {
 				required: true,
 				type: Number
+			},
+			top: {
+				required: true,
+				type: Number
 			}
 		},
 		computed: {
-			finalControlsStyles() {
+			controlStyle() {
 				return {
+					height: `${this.height}px`,
 					right: `${getScrollbarWidth() + 18}px`,
-					...this.controlsStyles
+					top: `${this.top}px`
 				}
 			},
 			currentSlide() {

@@ -1,5 +1,8 @@
 <template lang="pug">
-	q-page-sticky(:offset="[18, 18]", position="bottom-left")
+	q-page-sticky(
+		:offset="[18, 18]",
+		position="bottom-left"
+	)
 		q-btn(
 			@click="updateMeasures",
 			color="primary",

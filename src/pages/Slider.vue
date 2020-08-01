@@ -1,84 +1,76 @@
 <template lang="pug">
 	q-page.slider.scroll(:style-fn="myTweak")
-		SliderImage(
-			v-for="slide in slides",
-			:key="slide.index",
-			@handle-edge="showWarnings",
-			@handle-swipe="scrollToElement",
-			:id="slide.id",
-			v-bind="slide",
-			:number-slides="numberSlides"
-		)
+		template(v-if="showSlides")
+			x-slider-image(
+				v-for="slide in numberSlides",
+				:key="slide",
+				@handle-edge="showWarnings",
+				@handle-swipe="scrollToElement",
+				:height="currentSlideStyles.height",
+				:id="slideID(slide)"
+				:number-slides="numberSlides",
+				:slideIDbase="slideIDbase",
+				:width="currentSlideStyles.width",
+			)
 
-		SliderControls(
+		x-slider-controls(
 			@handle-click="scrollToElement",
-			:controls-styles="controlsStyles",
+			v-bind="controlsStyles",
 			:current-slide-index="currentSlideIndex",
 			:number-slides="numberSlides",
 		)
 
-		SliderRefresh(@update-measures="onUpdateMeasures")
+		x-slider-refresh(@update-measures="onUpdateMeasures")
 
-		q-resize-observer(@resize="onResize", debounce="300")
-		q-scroll-observer(@scroll="onScroll", debounce="200")
+		q-resize-observer(
+			@resize="onResize",
+			debounce="300"
+		)
+		q-scroll-observer(
+			@scroll="onScroll",
+			debounce="200"
+		)
 </template>
 
 <script>
-	import { dom, scroll, uid } from 'quasar'
+	import { dom, scroll } from 'quasar'
 	const { height: getHeight, width: getWidth } = dom
 	const { getScrollTarget, setScrollPosition } = scroll
 
 	import { mapState, mapMutations, mapActions } from 'vuex'
 
-	import SliderControls from 'components/SliderControls.vue'
-	import SliderImage from 'components/SliderImage.vue'
-	import SliderRefresh from 'components/SliderRefresh.vue'
-
 	export default {
 		name: 'PageSlider',
 		components: {
-			SliderControls,
-			SliderImage,
-			SliderRefresh
+			/* eslint-disable no-undef */
+			'x-slider-controls': require('components/SliderControls.vue')
+				.default,
+			'x-slider-image': require('components/SliderImage.vue').default,
+			'x-slider-refresh': require('components/SliderRefresh.vue').default
+			/* eslint-enable no-undef */
 		},
 		data: () => ({
 			controlsStyles: {
-				height: null,
-				top: null
+				height: 0,
+				top: 0
 			},
 			currentSlideIndex: 0,
 			currentSlideStyles: {
-				height: null,
-				width: null
+				height: 0,
+				width: 0
 			},
 			newSlideStyles: {
-				height: null,
-				width: null
+				height: 0,
+				width: 0
 			},
 			loaded: false,
-			orientation: null
+			orientation: null,
+			slideIDbase: 'Image-' // ???-[Index]
 		}),
 		computed: {
 			...mapState('slider', ['numberSlides']),
-			slides() {
-				const urlBase = 'https://picsum.photos/',
-					url = `${urlBase}${this.currentSlideStyles.width}/${this.currentSlideStyles.height}`
-
-				return Array.from({ length: this.numberSlides }, (_, index) => {
-					const id = uid(),
-						parameters = this.$q.dark.isActive
-							? `?grayscale&random=${id}.webp`
-							: `?random=${id}.webp`
-
-					return {
-						id: `Image-${index}`,
-						index,
-						src: `${url}${parameters}`,
-						styleComponent: {
-							height: `${this.currentSlideStyles.height}px`
-						}
-					}
-				})
+			showSlides() {
+				return !!this.currentSlideStyles.height
 			}
 		},
 		mounted() {
@@ -94,21 +86,23 @@
 				}
 			},
 			onResize({ width }) {
-				const body = document.getElementById('q-app'),
-					header = document.getElementsByClassName('q-header')[0],
-					bodyHight = parseInt(getHeight(body)),
-					bodyWidth = parseInt(getWidth(body)),
-					headerHight = parseInt(getHeight(header)),
-					height = bodyHight - headerHight,
-					newOrientation =
-						bodyHight > bodyWidth ? 'portrait' : 'landscape'
+				const body = document.getElementById('q-app')
+				const header = document.getElementsByClassName('q-header')[0]
+				const bodyHight = parseInt(getHeight(body))
+				const bodyWidth = parseInt(getWidth(body))
+				const headerHight = parseInt(getHeight(header))
+				const height = bodyHight - headerHight
+				const newOrientation =
+					bodyHight > bodyWidth ? 'portrait' : 'landscape'
 
-				this.controlsStyles.height = `${height}px`
-				this.controlsStyles.top = `${headerHight}px`
+				this.controlsStyles.height = height
+				this.controlsStyles.top = headerHight
 
 				this.newSlideStyles.height = height
 				this.newSlideStyles.width = width
 
+				//	On mobile devices when you change the orientation the
+				//		reloading of images should be automatic
 				if (
 					this.$q.platform.is.mobile &&
 					this.orientation !== newOrientation
@@ -155,9 +149,11 @@
 				this.updateMeasures()
 			},
 			scrollToElement(index) {
-				const element = document.getElementById(this.slides[index].id),
-					target = getScrollTarget(element),
-					offset = element.offsetTop
+				const element = document.getElementById(
+					`${this.slideIDbase}${index}`
+				)
+				const target = getScrollTarget(element)
+				const offset = element.offsetTop
 
 				setScrollPosition(target, offset)
 			},
@@ -171,12 +167,17 @@
 					timeout: 2000
 				})
 			},
+			slideID(imageNumber) {
+				return `${this.slideIDbase}${imageNumber - 1}`
+			},
 			updateMeasures() {
 				this.currentSlideStyles.height = 0
 				this.currentSlideStyles.width = 0
 
-				this.currentSlideStyles.height = this.newSlideStyles.height
-				this.currentSlideStyles.width = this.newSlideStyles.width
+				setTimeout(() => {
+					this.currentSlideStyles.height = this.newSlideStyles.height
+					this.currentSlideStyles.width = this.newSlideStyles.width
+				}, 0)
 			}
 		}
 	}

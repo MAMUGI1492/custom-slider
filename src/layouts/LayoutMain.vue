@@ -1,22 +1,21 @@
 <template lang="pug">
 	q-layout(view="lhr Lpr lFf")
-		Header(@toggle-drawer="toggleDrawer")
+		x-header(@toggle-drawer="toggleDrawer")
 
-		Drawer(v-model="drawerOpen")
+		x-drawer(v-model="drawerOpen")
 
 		q-page-container
 			router-view
 </template>
 
 <script>
-	import Header from 'components/Header.vue'
-	import Drawer from 'components/Drawer.vue'
-
 	export default {
 		name: 'LayoutMain',
 		components: {
-			Drawer,
-			Header
+			/* eslint-disable no-undef */
+			'x-drawer': require('components/Drawer.vue').default,
+			'x-header': require('components/Header.vue').default
+			/* eslint-enable no-undef */
 		},
 		data: () => ({
 			drawerOpen: false

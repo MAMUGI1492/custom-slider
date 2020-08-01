@@ -12,7 +12,10 @@
 		)
 			.drawer__head__body
 				q-avatar.drawer__head__body__avatar(size="56px")
-					img(src="~assets/my-logo.svg", alt="avatar")
+					img(
+						alt="avatar",
+						src="~assets/my-logo.svg"
+					)
 				.drawer__head__body__name Manuel Muñoz Gil
 				div @MAMUGI1492
 
@@ -22,7 +25,7 @@
 				header
 			) {{ $t('layout.drawer.usefulLinks') }}
 
-			EssentialLink(
+			x-essential-link(
 				v-for="link in essentialLinks",
 				:key="link.title",
 				v-bind="link"
@@ -65,7 +68,10 @@
 						rounded
 					)
 
-			q-item(tag="label", v-ripple)
+			q-item(
+				tag="label",
+				v-ripple
+			)
 				q-item-section(avatar)
 					q-icon(name="brightness_4")
 				q-item-section {{ $t('layout.drawer.theme') }}
@@ -82,12 +88,12 @@
 <script>
 	import { mapState, mapMutations, mapActions } from 'vuex'
 
-	import EssentialLink from 'components/EssentialLink.vue'
-
 	export default {
 		name: 'Drawer',
 		components: {
-			EssentialLink
+			/* eslint-disable no-undef */
+			'x-essential-link': require('components/EssentialLink.vue').default
+			/* eslint-enable no-undef */
 		},
 		props: {
 			value: {

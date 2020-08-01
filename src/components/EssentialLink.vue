@@ -1,6 +1,14 @@
 <template lang="pug">
-	q-item(:href="link", tag="a", target="_blank", clickable)
-		q-item-section(v-if="icon", avatar)
+	q-item(
+		:href="link",
+		tag="a",
+		target="_blank",
+		clickable
+	)
+		q-item-section(
+			v-if="icon",
+			avatar
+		)
 			q-icon(:name="icon")
 
 		q-item-section
@@ -13,20 +21,20 @@
 		name: 'EssentialLink',
 		props: {
 			title: {
-				type: String,
-				required: true
+				required: true,
+				type: String
 			},
 			caption: {
-				type: String,
-				default: ''
+				required: true,
+				type: String
 			},
 			link: {
-				type: String,
-				default: '#'
+				required: true,
+				type: String
 			},
 			icon: {
-				type: String,
-				default: ''
+				required: true,
+				type: String
 			}
 		}
 	}
