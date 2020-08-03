@@ -70,15 +70,6 @@ module.exports = function(/* ctx */) {
 						test: /\.pug$/,
 						loader: 'pug-plain-loader'
 					}
-					/* {
-						test: /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
-						loader: 'url-loader',
-						options: {
-							limit: 10000,
-							name: 'img/[name].[ext]'
-						},
-						exclude: /node_modules/
-					} */
 				)
 			}
 		},
