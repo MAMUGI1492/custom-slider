@@ -12,7 +12,7 @@
 		"build": "quasar build"
 	},
 	"dependencies": {
-		"core-js": "^3.8.2",
+		"core-js": "^3.8.3",
 		"@quasar/extras": "^1.9.16",
 		"quasar": "^1.15.0",
 		"vue-i18n": "^8.22.3",
