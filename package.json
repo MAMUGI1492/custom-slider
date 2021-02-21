@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"core-js": "^3.8.3",
-		"@quasar/extras": "^1.9.16",
+		"@quasar/extras": "^1.9.17",
 		"quasar": "^1.15.2",
 		"vue-i18n": "^8.22.4",
 		"vuex": "^3.6.2"
@@ -21,10 +21,10 @@
 	"devDependencies": {
 		"@quasar/app": "^2.1.14",
 		"babel-eslint": "^10.0.1",
-		"eslint": "^7.19.0",
+		"eslint": "^7.20.0",
 		"eslint-loader": "^4.0.2",
-		"eslint-config-prettier": "^6.15.0",
 		"eslint-plugin-vue": "^7.6.0",
+		"eslint-config-prettier": "^7.2.0",
 		"pug": "^3.0.0",
 		"pug-plain-loader": "^1.1.0"
 	},
