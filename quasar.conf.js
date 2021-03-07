@@ -70,15 +70,6 @@ module.exports = function(/* ctx */) {
 						test: /\.pug$/,
 						loader: 'pug-plain-loader'
 					}
-					/* {
-						test: /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/,
-						loader: 'url-loader',
-						options: {
-							limit: 10000,
-							name: 'img/[name].[ext]'
-						},
-						exclude: /node_modules/
-					} */
 				)
 			}
 		},
@@ -93,7 +84,7 @@ module.exports = function(/* ctx */) {
 		// https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
 		framework: {
 			iconSet: 'material-icons', // Quasar icon set
-			lang: 'es', // Quasar language pack
+			lang: 'en-us', // Quasar language pack
 			config: { dark: 'auto' },
 
 			// Possible values for "importStrategy":
