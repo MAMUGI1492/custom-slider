@@ -1,19 +1,19 @@
 <template lang="pug">
-.menu.fullscreen(:class="menuColor")
-	div
-		.menu__number 404
+	.menu.fullscreen.q-pa-md(:class="menuColor")
+		div
+			.menu__number 404
 
-		.menu__text {{ $t('error404.text') }}
+			.menu__text.text-h2 {{ $t('error404.text') }}
 
-		q-btn(
-			:text-color="textColor",
-			:label="$t('error404.button')",
-			color="white",
-			to="/",
-			no-caps,
-			rounded,
-			unelevated
-		)
+			q-btn.q-mt-xl(
+				:label="$t('error404.button')",
+				:text-color="textColor",
+				color="white",
+				to="/",
+				no-caps,
+				rounded,
+				unelevated
+			)
 </template>
 
 <script>
@@ -21,10 +21,10 @@
 		name: 'PageError404',
 		computed: {
 			menuColor() {
-				return { 'bg-blue': !this.$q.dark.isActive }
+				return { 'bg-primary': !this.$q.dark.isActive }
 			},
 			textColor() {
-				return this.$q.dark.isActive ? 'black' : 'blue'
+				return this.$q.dark.isActive ? 'black' : 'primary'
 			}
 		}
 	}
@@ -32,7 +32,6 @@
 
 <style lang="stylus">
 	.menu
-		padding $space-base
 		display flex
 		justify-content center
 		align-items center
@@ -42,11 +41,5 @@
 			.menu__number
 				font-size 30vh
 			.menu__text
-				line-height $headings.h2.line-height
-				font-size $headings.h2.size
-				letter-spacing  $headings.h2.letter-spacing
-				font-weight $headings.h2.weight
 				opacity 0.4
-			.q-btn
-				margin $space-xl.y 0 0 0
 </style>
