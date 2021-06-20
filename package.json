@@ -12,19 +12,19 @@
 		"build": "quasar build"
 	},
 	"dependencies": {
-		"core-js": "^3.10.0",
-		"@quasar/extras": "^1.10.2",
+		"core-js": "^3.14.0",
+		"@quasar/extras": "^1.10.7",
 		"quasar": "^1.15.21",
-		"vue-i18n": "^8.24.2",
+		"vue-i18n": "^8.24.4",
 		"vuex": "^3.6.2"
 	},
 	"devDependencies": {
-		"@quasar/app": "^2.2.4",
+		"@quasar/app": "^2.2.10",
 		"babel-eslint": "^10.0.1",
-		"eslint": "^7.23.0",
+		"eslint": "^7.28.0",
 		"eslint-loader": "^4.0.2",
-		"eslint-plugin-vue": "^7.8.0",
-		"eslint-config-prettier": "^8.1.0",
+		"eslint-plugin-vue": "^7.11.1",
+		"eslint-config-prettier": "^8.3.0",
 		"pug": "^3.0.1",
 		"pug-plain-loader": "^1.1.0"
 	},
